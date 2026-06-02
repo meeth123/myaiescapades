@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project — meeth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #161616;
+      --border: #1f1f1f;
+      --primary: #00ff88;
+      --primary-dim: rgba(0,255,136,0.08);
+      --text: #f0f0f0;
+      --muted: #888;
+      --dim: #444;
+      --error: #f87171;
+      --yellow: #fbbf24;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.9);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--primary); }
+    .nav-back svg { width: 14px; height: 14px; }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--dim);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 72px 40px 56px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .status-badge.active   { background: rgba(0,255,136,0.1); color: var(--primary); border: 1px solid rgba(0,255,136,0.2); }
+    .status-badge.wip      { background: rgba(251,191,36,0.1); color: var(--yellow); border: 1px solid rgba(251,191,36,0.2); }
+    .status-badge.archived { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border); }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .active .status-dot   { background: var(--primary); box-shadow: 0 0 6px var(--primary); }
+    .wip .status-dot      { background: var(--yellow); }
+    .archived .status-dot { background: var(--dim); }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .desc {
+      font-size: 18px;
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 560px;
+      line-height: 1.65;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      background: var(--surface);
+      letter-spacing: 0.01em;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* Content sections */
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-text {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* Info grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .info-cell {
+      background: var(--surface);
+      padding: 20px 24px;
+    }
+    .info-cell-label {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .info-cell-value {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Link button */
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #000;
+    }
+    .btn-primary:hover { background: #00e07a; }
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+    .btn svg { width: 15px; height: 15px; }
+
+    /* Not found state */
+    .not-found {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      gap: 12px;
+    }
+    .not-found h2 { font-size: 22px; color: var(--error); font-family: 'JetBrains Mono', monospace; }
+    .not-found p  { color: var(--muted); font-size: 14px; }
+
+    @media (max-width: 600px) {
+      nav, .hero, .content { padding-left: 20px; padding-right: 20px; }
+      h1 { font-size: 28px; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="javascript:history.back()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    cd ..
+  </a>
+  <span class="nav-logo">meeth@ai-projects</span>
+</nav>
+
+<div id="app"></div>
+
+<script>
+const PROJECTS = [
+  {
+    name: 'llm-router',
+    status: 'active',
+    stack: ['Python', 'FastAPI', 'OpenAI', 'Anthropic'],
+    desc: 'Routes user queries to the optimal LLM based on complexity and cost.',
+    detail: 'A lightweight proxy that classifies incoming prompts by complexity, intent, and cost-sensitivity, then routes them to the most appropriate model. Simple factual queries hit Haiku; complex reasoning goes to Opus. Cuts inference costs by ~60% with no perceived quality drop.',
+    highlights: ['60% cost reduction on avg workloads', 'Sub-10ms routing latency', 'Supports Claude, GPT-4o, Gemini, Llama'],
+    link: 'github.com/meeth/llm-router',
+    year: '2024',
+  },
+  {
+    name: 'vision-tagger',
+    status: 'active',
+    stack: ['Python', 'Gemini Vision', 'FastAPI', 'Redis'],
+    desc: 'Auto-tags product images using Gemini Vision API. Processes 10k images/hr.',
+    detail: 'Bulk image tagging pipeline for e-commerce. Accepts image URLs or uploads, runs them through Gemini Vision with a structured taxonomy prompt, and returns normalized tags. Uses Redis queuing to hit 10k images/hr throughput on a single instance.',
+    highlights: ['10,000 images/hr throughput', 'Structured taxonomy output', 'Batch + streaming modes'],
+    link: 'github.com/meeth/vision-tagger',
+    year: '2024',
+  },
+  {
+    name: 'rag-notes',
+    status: 'wip',
+    stack: ['TypeScript', 'LangChain', 'Pinecone', 'Next.js'],
+    desc: 'Personal knowledge base with RAG-powered semantic search over Obsidian notes.',
+    detail: 'Indexes an Obsidian vault into Pinecone with chunk-level embeddings, then exposes a chat interface that cites source notes. Built to replace ctrl+F with actual semantic understanding across 2000+ personal notes.',
+    highlights: ['2000+ notes indexed', 'Source citation on every answer', 'Live sync with Obsidian vault'],
+    link: 'github.com/meeth/rag-notes',
+    year: '2025',
+  },
+  {
+    name: 'agent-scraper',
+    status: 'archived',
+    stack: ['Python', 'Playwright', 'Claude', 'Pydantic'],
+    desc: 'Agentic web scraper — LLM decides what to click and extract, no selectors needed.',
+    detail: 'Proof-of-concept for selector-free scraping. The agent receives a goal ("extract all product prices"), observes the DOM, and decides what to click and where to look — no hardcoded selectors. Worked well on simple sites, but hallucination rate on complex SPAs made it unreliable for prod.',
+    highlights: ['Zero selector configuration', 'Handles JS-rendered pages', 'Archived — reliability issues on SPAs'],
+    link: 'github.com/meeth/agent-scraper',
+    year: '2023',
+  },
+];
+
+const params = new URLSearchParams(window.location.search);
+const name = params.get('name');
+const project = PROJECTS.find(p => p.name === name);
+const app = document.getElementById('app');
+
+function statusLabel(s) {
+  if (s === 'active')    return 'Active';
+  if (s === 'wip')       return 'In Progress';
+  if (s === 'archived')  return 'Archived';
+  return s;
+}
+
+if (!project) {
+  app.innerHTML = `
+    <div class="not-found">
+      <h2>project not found</h2>
+      <p>${name ? `"${name}" doesn't exist.` : 'No project specified.'}</p>
+      <br>
+      <a class="btn btn-secondary" href="index.html">← back to terminal</a>
+    </div>`;
+  document.title = 'Not found — meeth';
+} else {
+  document.title = `${project.name} — meeth`;
+
+  const tagHtml = project.stack.map(t => `<span class="tag">${t}</span>`).join('');
+  const highlightHtml = project.highlights.map(h => `
+    <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">
+      <span style="color:var(--primary);font-size:12px;margin-top:3px;flex-shrink:0;">›</span>
+      <span style="color:var(--muted);font-size:14px;">${h}</span>
+    </div>`).join('');
+
+  app.innerHTML = `
+    <div class="hero">
+      <div class="status-badge ${project.status}">
+        <span class="status-dot"></span>
+        ${statusLabel(project.status)}
+      </div>
+      <h1>${project.name}</h1>
+      <p class="desc">${project.desc}</p>
+      <div class="tags">${tagHtml}</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content">
+
+      <div>
+        <div class="section-label">Overview</div>
+        <p class="section-text">${project.detail}</p>
+      </div>
+
+      <div>
+        <div class="section-label">Highlights</div>
+        ${highlightHtml}
+      </div>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-cell-label">Status</div>
+          <div class="info-cell-value">${statusLabel(project.status)}</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-cell-label">Year</div>
+          <div class="info-cell-value">${project.year}</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-cell-label">Stack</div>
+          <div class="info-cell-value" style="font-family:'JetBrains Mono',monospace;font-size:13px;">${project.stack.join(' · ')}</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-cell-label">Repo</div>
+          <div class="info-cell-value" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">${project.link}</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="https://${project.link}" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+        <a class="btn btn-secondary" href="index.html">
+          ← back to terminal
+        </a>
+      </div>
+
+    </div>`;
+}
+</script>
+</body>
+</html>
