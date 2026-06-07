@@ -183,6 +183,33 @@
       font-weight: 500;
     }
 
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .gallery-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #fdfaf6;
+    }
+    .gallery-caption {
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      border-top: 1px solid var(--border);
+    }
+
     /* Link button */
     .actions {
       display: flex;
@@ -232,6 +259,7 @@
       nav, .hero, .content { padding-left: 20px; padding-right: 20px; }
       h1 { font-size: 28px; }
       .info-grid { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -303,6 +331,12 @@ const PROJECTS = [
     link: 'famai.in',
     linkLabel: 'Visit famai.in',
     year: '2026',
+    gallery: [
+      { src: 'assets/famai/medicine.png', caption: 'Medicine reminders that ask again — and wait for a real answer.' },
+      { src: 'assets/famai/scam.png', caption: 'Forward a suspicious message, get a straight answer in Hindi.' },
+      { src: 'assets/famai/health.png', caption: 'BP and sugar tracked over voice notes, no app, no notebook.' },
+      { src: 'assets/famai/diwali-card.png', caption: 'Greeting cards a parent makes in a sentence — no ads, no clutter.' },
+    ],
   },
 ];
 
@@ -342,6 +376,18 @@ if (!project) {
       <span style="color:var(--muted);font-size:14px;">${h}</span>
     </div>`).join('');
 
+  const galleryHtml = (project.gallery && project.gallery.length) ? `
+      <div>
+        <div class="section-label">A look inside</div>
+        <div class="gallery">
+          ${project.gallery.map(g => `
+            <figure class="gallery-item">
+              <img src="${g.src}" alt="${g.caption}" loading="lazy">
+              <figcaption class="gallery-caption">${g.caption}</figcaption>
+            </figure>`).join('')}
+        </div>
+      </div>` : '';
+
   app.innerHTML = `
     <div class="hero">
       <div class="status-badge ${project.status}">
@@ -366,6 +412,8 @@ if (!project) {
         <div class="section-label">Highlights</div>
         ${highlightHtml}
       </div>
+
+      ${galleryHtml}
 
       <div class="info-grid">
         <div class="info-cell">
