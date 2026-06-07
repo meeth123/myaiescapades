@@ -193,6 +193,13 @@ const PROJECTS = [
     desc: 'Agentic web scraper — LLM decides what to click and extract, no selectors needed.',
     link: 'github.com/meeth/agent-scraper',
   },
+  {
+    name: 'famai',
+    status: 'wip',
+    stack: [],
+    desc: 'A WhatsApp AI assistant for Indian parents — set up by their kids in two minutes.',
+    link: 'famai.in',
+  },
 ];
 
 const THEMES = ['green-goblin', 'blue-matrix', 'ubuntu', 'espresso', 'amber'];
@@ -292,7 +299,7 @@ function handle(raw) {
           print(`<span class="out-green">// ${p.name}</span>`);
           blank();
           print(`  <span class="out-dim">desc:</span>    ${p.desc}`);
-          print(`  <span class="out-dim">stack:</span>   ${p.stack.join(' · ')}`);
+          if (p.stack.length) print(`  <span class="out-dim">stack:</span>   ${p.stack.join(' · ')}`);
           print(`  <span class="out-dim">status:</span>  <span class="${statusColor(p.status)}">[${p.status}]</span>`);
           print(`  <span class="out-dim">link:</span>    <span class="out-muted">${p.link}</span>`);
           blank();
@@ -304,7 +311,7 @@ function handle(raw) {
         PROJECTS.forEach(p => {
           const tags = p.stack.slice(0,3).map(t => `<span class="tag">${t}</span>`).join('');
           print(`  <span class="out-green">drwxr-xr-x</span>  <span class="out-text">${p.name}/</span>  <span class="${statusColor(p.status)}">[${p.status}]</span>`);
-          print(`               ${tags}`);
+          if (p.stack.length) print(`               ${tags}`);
           print(`               <span class="out-dim">${p.desc}</span>`);
           blank();
         });
