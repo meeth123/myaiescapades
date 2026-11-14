@@ -154,6 +154,17 @@
       color: var(--muted);
       line-height: 1.75;
     }
+    .section-text + .section-text,
+    .steps + .section-text,
+    .section-text + .steps { margin-top: 16px; }
+    .steps {
+      color: var(--muted);
+      line-height: 1.75;
+      padding-left: 22px;
+    }
+    .steps li { margin-bottom: 10px; }
+    .steps li::marker { color: var(--primary); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    .steps strong, .section-text strong { color: var(--text); font-weight: 600; }
 
     /* Info grid */
     .info-grid {
@@ -202,6 +213,20 @@
       object-fit: cover;
       background: #fdfaf6;
     }
+    .cover {
+      max-width: 760px;
+      margin: 0 auto 48px;
+      padding: 0 40px;
+    }
+    .cover img {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .section-figure { margin-top: 24px; }
+    .gallery-item.wide { grid-column: 1 / -1; }
+    .gallery-item.wide img { aspect-ratio: auto; object-fit: contain; background: #0e0e10; }
     .gallery-caption {
       padding: 12px 16px;
       font-size: 13px;
@@ -256,7 +281,7 @@
     .not-found p  { color: var(--muted); font-size: 14px; }
 
     @media (max-width: 600px) {
-      nav, .hero, .content { padding-left: 20px; padding-right: 20px; }
+      nav, .hero, .content, .cover { padding-left: 20px; padding-right: 20px; }
       h1 { font-size: 28px; }
       .info-grid { grid-template-columns: 1fr; }
       .gallery { grid-template-columns: 1fr; }
@@ -298,6 +323,154 @@ const PROJECTS = [
       { src: 'assets/famai/diwali-card.png', caption: 'Greeting cards a parent makes in a sentence — no ads, no clutter.' },
     ],
   },
+  {
+    name: 'oneprofoundidea',
+    status: 'wip',
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'Remotion', 'Manim', 'Playwright'],
+    desc: 'One science idea a day, as a lesson, a reel and a carousel.',
+    detail: `Some ideas in science change how you see everything after them. Entropy is one. Evolution is another. oneprofoundidea serves one of these a day, from maths, physics or biology. The idea is revealed slowly, so the curiosity builds before the answer lands. It started as a phone-first web app. Then it grew two more legs on Instagram at @one_ideadaily, reels and carousels. Each of the three is its own pipeline, with agents doing most of the making and me doing the editing. 38 lessons are live, 35 carousels have been made and 20 reels have been built since September.`,
+    sections: [
+      { label: 'The one habit', body: [
+        `All three pipelines share one habit. When I leave a note, it fixes that piece and also goes into a steering log, where it becomes a rule, or better, a check in code. We learnt early that rules written only in prose keep coming back. Rules that became code stopped coming back.`,
+      ]},
+      { label: 'How a lesson gets made', body: [
+        [
+          `<strong>Research.</strong> A Gemini Deep Research run per subject brings back candidate ideas. Every claim has a dated source.`,
+          `<strong>Gate 1.</strong> I see each idea as a card, with its one-line claim, why it matters and two or three facts. I pick the ones worth a lesson. In the first run I kept about 7 of 9.`,
+          `<strong>Write.</strong> Each lesson is one TypeScript file with a fixed shape. A hook, two or three screens to let the idea simmer, a prediction question, the mechanism, the name of the concept, a transfer question, a takeaway, and three real-world trails to go deeper.`,
+          `<strong>Check the words.</strong> A linter fails the build on AI-sounding copy. Words like "delve" and "tapestry", "studies show", filler phrases and em dashes. Then a separate Opus reviewer reads every line against 24 writing rules.`,
+          `<strong>Make the visuals.</strong> Some are coded glyphs, some are Gemini illustrations, some are Manim animations and some are React or Canvas components. A mobile check loads every screen at 375px wide and fails if anything overflows.`,
+          `<strong>Gate 2.</strong> A 10-point rubric, 16 out of 20 to pass. Then I go through it screen by screen in a review tool and comment on each step.`,
+          `<strong>Publish.</strong> Set the status to published and give it a date. A free explainer page for search goes out with it.`,
+        ],
+        `The first full run made 7 lessons in a day. It also found that 44 of 77 quiz questions had an answer you could guess without reading the lesson. That's how "wrong options must be real misconceptions" became a rule.`,
+      ], image: { src: 'assets/oneprofoundidea/lesson-tidal-locking.jpg', caption: 'The tidal locking lesson on a phone. Hook, setup, a guess, the mechanism, then the name.' } },
+      { label: 'How a reel gets made', body: [
+        [
+          `<strong>Scout.</strong> Agents brainstorm 20+ ideas each in an everyday area, check the best five, and score them. The best ones pass four gates. You've seen the thing and you believe a wrong answer about it. There's a chain of three or more reveals. Nobody big has done it already. It makes sense on mute, on a phone, watched once.`,
+          `<strong>Research dossier.</strong> Sources, and the places where it's easy to get the science wrong.`,
+          `<strong>Brief and screenplay.</strong> I write the hook line and the arc. An Opus screenwriter writes the full screenplay, beat by beat, with a time budget.`,
+          `<strong>Gates.</strong> A script measures every caption so nothing overflows. A separate Opus reviewer scores it out of 18, 15 to pass. It has logged over 170 reviews.`,
+          `<strong>Build.</strong> Reels are made in Remotion now. The animation comes from real simulations or rules in code. Any person or animal is an illustration, never drawn from shapes. Scenes paint themselves in, like ink drawing on.`,
+          `<strong>More gates.</strong> A frame check against Instagram's safe zones, a pace check of at least 3 seconds per line, and a contact sheet.`,
+          `<strong>My review.</strong> I scrub the video, grab frames and comment by timestamp. The notes get applied and logged.`,
+          `<strong>Ship.</strong> The same silent MP4 goes to Instagram and YouTube Shorts.`,
+        ],
+      ], image: { src: 'assets/oneprofoundidea/reel-rainbow-frames.jpg', caption: 'Inside the rainbow reel. Every scene paints itself in, and you get the idea with the sound off.' } },
+      { label: 'What 20 reels taught me', body: [
+        `A reel is won or lost in the first two or three seconds. Every reel that failed has the same curve. A cliff in the first three seconds, then a flat line. The body of the reel isn't the problem.`,
+        `The first frame has to be bright and recognisable and already moving. And the first line has to be an impossible claim. "Leaving the Solar System is much easier than hitting the Sun" had a 27.5% skip rate, the best on the account. "That foot you stick out of the blanket at night?" had 69.8%. Tidal locking is the biggest one so far, at ~3,400 views. A typical reel on the account gets ~150-200.`,
+        `There's a 60 second cap now, after a 112 second reel about fireflies flopped at 68% skip.`,
+      ]},
+      { label: 'How a carousel gets made', body: [
+        [
+          `<strong>Pick the idea.</strong> Usually a published lesson. Sometimes a reel that has no lesson yet.`,
+          `<strong>Lock the words first.</strong> Four panels. A hook, the setup, the mechanism (the aha moment), and three real proofs ending in a question the lesson answers.`,
+          `<strong>Build.</strong> A spec file turns into HTML and Playwright shoots four 4:5 panels. The art is single-colour line drawings, with the colour set by subject. Indigo for maths, violet for physics, teal for biology.`,
+          `<strong>Review.</strong> Opus opens every panel at full size and scores it out of 18. The test for the mechanism panel is whether someone could explain the "why" back from that one screen. Then I click on a panel, comment and send.`,
+          `<strong>Ship.</strong> Four PNGs and a caption that points to the lesson.`,
+        ],
+        `The most common mistake was labels running into the drawings. The agent's own scores kept missing it, so now Opus reads every panel itself. Fact checks happen against the lesson file, never the worker's summary. That caught a headline that had the science backwards.`,
+      ], image: { src: 'assets/oneprofoundidea/carousel-sun.jpg', caption: 'A carousel in four panels. Hook, the catch, the numbers, the proof.' } },
+    ],
+    highlights: [
+      '38 lessons live, each one through two human gates, a copy linter and an Opus reviewer',
+      '20 reels since September. Best skip rate 27.5%, and the biggest got ~3,400 views',
+      'Every editor note becomes a rule or a check in code, so the same mistake doesn\'t come back',
+    ],
+    link: 'oneprofoundidea.com',
+    linkLabel: 'Visit oneprofoundidea.com',
+    year: '2026',
+    cover: { src: 'assets/oneprofoundidea/reel-covers.jpg', alt: 'Five reel covers, each opening on a claim that sounds impossible' },
+    gallery: [
+      { src: 'assets/oneprofoundidea/lesson-review-tool.jpg', wide: true, caption: 'The lesson review tool. Every screen of the lesson as a tile. I click one, leave a note, and hit Send.' },
+      { src: 'assets/oneprofoundidea/reel-review-tool.jpg', wide: true, caption: 'The reel review tool. I scrub to a moment, capture the frame and comment on that timestamp.' },
+      { src: 'assets/oneprofoundidea/carousel-review-tool.jpg', wide: true, caption: 'The carousel review tool, with one panel open for comments.' },
+      { src: 'assets/oneprofoundidea/carousel-mitochondria.jpg', wide: true, caption: 'Biology gets teal. Every carousel ends by pointing to the full lesson.' },
+    ],
+  },
+  {
+    name: 'hsr-after-hours',
+    status: 'wip',
+    stack: ['Vite', 'TypeScript', 'three.js', 'Rapier'],
+    desc: 'A neon night-time driving game set in the real HSR Layout, Bengaluru.',
+    detail: `HSR Layout at night is already half a game. Jaywalkers, honking, autos cutting across. HSR After Hours puts you on a scooter delivering food for Swoggy, or in an auto taking rides for Rapidoh. It runs in a mobile browser, held sideways, with thumb controls. The one rule for the whole project was that a local should look at a screenshot and say "that's HSR". So nothing in the world is made up if we could find the real thing. That turned out to be most of the work.`,
+    sections: [
+      { label: 'How we mapped it', body: [
+        `I started with Google's 3D tiles. Lo and behold, Google Earth shows HSR as flat satellite imagery, so the tiles added nothing. We dropped them and built everything from OpenStreetMap instead. A script pulls the roads, lanes, one-ways and about 12,500 building footprints, and turns them into the world.`,
+        `OSM gets you close, not right. So we checked it, area by area. The game map was laid over Google Maps satellite view and compared block by block. A road more than 4 m off, a shop more than 15 m off, or a wrong one-way counted as an error. Shops and places went first because that's what people recognise. Across three areas that meant adding 152 real places, moving 15 and renaming 6. The McDonald's corner at 14th Main and 17th Cross got 24 fixes on its own. We never deleted a shop just because Google didn't show a label, since a missing label doesn't mean the shop has closed.`,
+        `Road widths were measured off the satellite view by hand. The scale came from Google's own scale bar and was checked against parked cars, which came out at 4.2 m by 1.9 m. 27th Main is about 10.3 m kerb to kerb. Then every road is drawn 25% wider in the game, because real HSR roads are not fun on a scooter. Every fix lives in one patch file and nobody edits the map by hand, so any fix can be rolled back.`,
+      ], image: { src: 'assets/hsr-after-hours/fullmap.jpg', caption: 'The full map inside the game, built from OpenStreetMap. Tap a spot to set where you\'re going.' } },
+      { label: 'How we got the streets and facades right', body: [
+        `The reference was real video. We pulled frames from YouTube drives and walks through HSR at night and put them side by side with the same spot in the game. The 27th Main night street went through six rounds of that before it looked right.`,
+        `From those frames we wrote down what makes 27th Main look like 27th Main. Undivided four lanes with a double yellow line. Cars and angled bikes parked along both kerbs. G+3 to G+6 glass and ACP blocks with brand boards stacked on top of each other, in Kannada and English. Green concrete poles with transformer frames. Red and yellow kerb paint. The back streets are 7.5 m wide, with pastel G+2 apartments, grilles, chajjas, Sintex tanks on the roof and coconut palms. 487 named shops sit on their real walls.`,
+        `There were a few rules. No Street View, because Google's terms don't allow it. AI-generated images could be used as a modelling reference but never shipped. Real shopfronts still need my own photos, so that part isn't done.`,
+      ]},
+      { label: 'How we designed the vehicles', body: [
+        `The first pass of vehicles looked generic. My note after the art review was "get the details of actual vehicle from internet and draw right proportion, detailing is missing completely … Need it accurate please. wheels everything."`,
+        `So every vehicle became a real model. Swift, i20, Dzire and the white Dzire cab. Creta and Innova Crysta. The Hoysala police Ertiga. Activa 6G and Jupiter. Splendor+ and Pulsar 150. The Bajaj RE auto, in green and black. BMTC's light-blue Volvo and the red-and-cream Ashok Leyland. Each one is built to its real length, width, height and wheelbase, with tyre sizes as written on the sidewall.`,
+        `Eight agents built eight vehicle families in parallel, each in its own file, against one shared contract. A vehicle lab page shows each model next to photos of the real one from every side, and runs automated checks (wheels on the ground, nothing floating, size within spec). Then a reviewer scores proportion, silhouette, wheels and detail, and anything under 8 goes back. The auto got sent back at 7 because the rear view didn't match the BS6 model, the driver's backrest was missing and the passengers were clipping through the body. Its finished length is 2.634 m against a real 2.635 m.`,
+      ], image: { src: 'assets/hsr-after-hours/vehicle-lab-pair.jpg', caption: 'The auto and the SUV in the vehicle lab, checked from every side before they got in.' } },
+      { label: 'What you actually do', body: [
+        `Jobs come in as offers. A Swoggy order shows the restaurant, the drop, the trip length and the fare, and you accept or decline. A pink beam marks the pickup. At the end you get a slip with the base fare, distance, time bonus, tip and any deductions.`,
+        `Ride badly and it costs you. Traffic police hand out a ₹500 challan. Wreck the ride and the mechanic anna is already on the phone with a ₹1,200 repair bill.`,
+      ], image: { src: 'assets/hsr-after-hours/jobs-offer-pickup-pay.jpg', caption: 'A Swoggy job. The offer, the pickup beam, and the payout slip.' } },
+    ],
+    cover: { src: 'assets/hsr-after-hours/cover-gameplay.jpg', alt: 'Three gameplay shots of HSR Layout at night, from the auto and the scooter' },
+    highlights: [
+      'Real HSR from OpenStreetMap, checked block by block against satellite. 152 real places added across three areas',
+      'Every road width measured by hand from satellite, then drawn 25% wider so it\'s fun to ride',
+      '14 real vehicles built to spec, each checked against photos and scored before it got in',
+    ],
+    link: '',
+    year: '2026',
+    gallery: [
+      { src: 'assets/hsr-after-hours/hud-challan-repair.jpg', wide: true, caption: 'The two ways a night goes wrong. A challan, or a wrecked ride.' },
+      { src: 'assets/hsr-after-hours/gameplay-rain.jpg', caption: 'After the rain, with the wet road picking up the shop lights.' },
+      { src: 'assets/hsr-after-hours/gameplay-status.jpg', caption: 'Your traffic record and scooter damage, always on screen.' },
+      { src: 'assets/hsr-after-hours/gameplay-27th-main-auto.jpg', caption: '27th Main at night, from the auto.' },
+      { src: 'assets/hsr-after-hours/gameplay-24th-main-scooter.jpg', caption: 'Scooter mode on 24th Main, squeezing through traffic.' },
+      { src: 'assets/hsr-after-hours/gameplay-back-street-traffic.jpg', caption: 'A back street, with cars and bikes parked along the kerb.' },
+      { src: 'assets/hsr-after-hours/vehicle-lab-scooters-measured.jpg', caption: 'The scooter family, measured against the real spec.' },
+    ],
+  },
+  {
+    name: 'movie-plugin',
+    status: 'active',
+    stack: ['Chrome extension', 'Python', 'Obsidian', 'Claude Code'],
+    desc: 'A movie watchlist that learns my taste and tells me what to watch tonight.',
+    detail: `movie-plugin started as a plain tracker. A movie was either seen or discarded, and that was it. So I rebuilt it as a funnel that learns what I like. 132 movies have gone through it so far. 63 liked, 8 disliked, 31 discarded and 30 still waiting to be watched.`,
+    sections: [
+      { label: 'How it works', body: [
+        [
+          `<strong>Capture.</strong> I select a movie name on any web page and a small "add" button pops up. The Chrome extension sends it to a small Python server running on my laptop, which writes a note into my Obsidian vault.`,
+          `<strong>Research.</strong> A Claude agent fills in each new note. Rotten Tomatoes audience score (the Popcorn Meter, not the critics), genres, director, year, language, the Letterboxd rating, a one-line "Reddit vibe" and where it's streaming in India from JustWatch.`,
+          `<strong>Decide.</strong> Movies show up as a deck of tarot cards, one at a time. Want to Watch or Discard. If I've already seen it, Liked or Disliked.`,
+          `<strong>Learn.</strong> Each of those is a folder in Obsidian, so the folder is the state. Liked and Disliked are strong signals, Want is a weak yes, and Discarded is a no.`,
+          `<strong>Recommend.</strong> When I ask for recommendations, an agent reads every signal and the last taste profile. It comes up with 12-15 candidates, researches each one, drops anything with an audience score of 70% or under, and keeps the best 8-10. It also writes a new taste profile, split by genre, so the next run starts from there. There are five of those snapshots now.`,
+        ],
+        `A live console at the bottom of the screen shows the agent working. What it's reading, which tool it's using, and the tokens it's spending.`,
+      ], image: { src: 'assets/movie-plugin/watchlist-grid.jpg', caption: 'Every saved movie, with its audience score, Letterboxd rating and genres filled in by the agent.' } },
+      { label: 'The interesting bit', body: [
+        `The recommendation agent is three models working together. Sonnet runs it. A cheap researcher does all the web fetching. Opus does the thinking, but it can only read, so it only ever sees the distilled facts and never a raw web page. The first version had Opus in charge with web tools switched off, and a live test showed that switch also turned off the tools for every helper under it. So we flipped it around.`,
+        `To be honest, the cost didn't really drop. A run still costs about $5, and most of that is web fetching. But Opus is only 4% of it now, and it can't touch the web even by accident.`,
+      ]},
+    ],
+    highlights: [
+      'Save a movie from any web page with one click',
+      'Every like, dislike and discard feeds the next set of recommendations',
+      'Opus does the thinking on only distilled facts. It costs 4% of a run',
+    ],
+    link: '',
+    year: '2026',
+    cover: { src: 'assets/movie-plugin/watchlist-top-picks.jpg', alt: 'The watchlist, with stats and a row of top picks for tonight' },
+    gallery: [
+      { src: 'assets/movie-plugin/add-overlay.jpg', wide: true, caption: 'Select a movie name on any page and the add button pops up right there.' },
+      { src: 'assets/movie-plugin/research-console.jpg', wide: true, caption: 'The live console during a research run. The agent reads the note, hands the web lookups to a researcher, and the token count ticks up on the right.' },
+      { src: 'assets/movie-plugin/decide-card.jpg', wide: true, caption: 'Once research is done the movie lands in Decide as a card. Want to Watch or Discard, or Liked and Disliked if I\'ve already seen it.' },
+      { src: 'assets/movie-plugin/library.jpg', wide: true, caption: 'The library of what I\'ve watched. Each like and dislike feeds the next set of recommendations.' },
+    ],
+  },
 ];
 
 const params = new URLSearchParams(window.location.search);
@@ -325,7 +498,7 @@ if (!project) {
   document.title = `${project.name} — meeth`;
 
   const tagHtml = project.stack.map(t => `<span class="tag">${t}</span>`).join('');
-  const isGithub = project.link.startsWith('github.com');
+  const isGithub = !!project.link && project.link.startsWith('github.com');
   const linkLabel = project.linkLabel || (isGithub ? 'View on GitHub' : 'Visit site');
   const linkIcon = isGithub
     ? `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>`
@@ -336,12 +509,26 @@ if (!project) {
       <span style="color:var(--muted);font-size:14px;">${h}</span>
     </div>`).join('');
 
+  // Optional long-form sections. A string in body is a paragraph; an array is a numbered list.
+  const sectionsHtml = (project.sections || []).map(s => `
+      <div>
+        <div class="section-label">${s.label}</div>
+        ${s.body.map(b => Array.isArray(b)
+          ? `<ol class="steps">${b.map(li => `<li>${li}</li>`).join('')}</ol>`
+          : `<p class="section-text">${b}</p>`).join('')}
+        ${s.image ? `
+        <figure class="gallery-item wide section-figure">
+          <img src="${s.image.src}" alt="${s.image.caption}" loading="lazy">
+          <figcaption class="gallery-caption">${s.image.caption}</figcaption>
+        </figure>` : ''}
+      </div>`).join('');
+
   const galleryHtml = (project.gallery && project.gallery.length) ? `
       <div>
         <div class="section-label">A look inside</div>
         <div class="gallery">
           ${project.gallery.map(g => `
-            <figure class="gallery-item">
+            <figure class="gallery-item${g.wide ? ' wide' : ''}">
               <img src="${g.src}" alt="${g.caption}" loading="lazy">
               <figcaption class="gallery-caption">${g.caption}</figcaption>
             </figure>`).join('')}
@@ -359,6 +546,11 @@ if (!project) {
       ${project.stack.length ? `<div class="tags">${tagHtml}</div>` : ''}
     </div>
 
+    ${project.cover ? `
+    <div class="cover">
+      <img src="${project.cover.src}" alt="${project.cover.alt}">
+    </div>` : ''}
+
     <div class="divider"></div>
 
     <div class="content">
@@ -367,6 +559,8 @@ if (!project) {
         <div class="section-label">Overview</div>
         <p class="section-text">${project.detail}</p>
       </div>
+
+      ${sectionsHtml}
 
       <div>
         <div class="section-label">Highlights</div>
@@ -385,21 +579,23 @@ if (!project) {
           <div class="info-cell-value">${project.year}</div>
         </div>
         ${project.stack.length ? `
-        <div class="info-cell">
+        <div class="info-cell"${project.link ? '' : ' style="grid-column:1/-1;"'}>
           <div class="info-cell-label">Stack</div>
           <div class="info-cell-value" style="font-family:'JetBrains Mono',monospace;font-size:13px;">${project.stack.join(' · ')}</div>
         </div>` : ''}
+        ${project.link ? `
         <div class="info-cell"${project.stack.length ? '' : ' style="grid-column:1/-1;"'}>
           <div class="info-cell-label">${isGithub ? 'Repo' : 'Link'}</div>
           <div class="info-cell-value" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">${project.link}</div>
-        </div>
+        </div>` : ''}
       </div>
 
       <div class="actions">
+        ${project.link ? `
         <a class="btn btn-primary" href="https://${project.link}" target="_blank">
           ${linkIcon}
           ${linkLabel}
-        </a>
+        </a>` : ''}
         <a class="btn btn-secondary" href="index.html">
           ← back to terminal
         </a>
