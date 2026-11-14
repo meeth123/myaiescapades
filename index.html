@@ -172,6 +172,27 @@ const PROJECTS = [
     desc: 'A WhatsApp AI assistant for Indian parents — set up by their kids in two minutes.',
     link: 'famai.in',
   },
+  {
+    name: 'oneprofoundidea',
+    status: 'wip',
+    stack: ['Next.js', 'Remotion', 'Manim'],
+    desc: 'One science idea a day, as a lesson, a reel and a carousel.',
+    link: 'oneprofoundidea.com',
+  },
+  {
+    name: 'hsr-after-hours',
+    status: 'wip',
+    stack: ['three.js', 'Rapier', 'OpenStreetMap'],
+    desc: 'A neon night-time driving game set in the real HSR Layout, Bengaluru.',
+    link: '',
+  },
+  {
+    name: 'movie-plugin',
+    status: 'active',
+    stack: ['Chrome extension', 'Python', 'Obsidian'],
+    desc: 'A movie watchlist that learns my taste and tells me what to watch tonight.',
+    link: '',
+  },
 ];
 
 const THEMES = ['green-goblin', 'blue-matrix', 'ubuntu', 'espresso', 'amber'];
@@ -273,7 +294,7 @@ function handle(raw) {
           print(`  <span class="out-dim">desc:</span>    ${p.desc}`);
           if (p.stack.length) print(`  <span class="out-dim">stack:</span>   ${p.stack.join(' · ')}`);
           print(`  <span class="out-dim">status:</span>  <span class="${statusColor(p.status)}">[${p.status}]</span>`);
-          print(`  <span class="out-dim">link:</span>    <span class="out-muted">${p.link}</span>`);
+          if (p.link) print(`  <span class="out-dim">link:</span>    <span class="out-muted">${p.link}</span>`);
           blank();
         }
       } else {
